@@ -72,14 +72,17 @@ function onFile(e, kind) {
   const log = document.getElementById('import-log');
   log.textContent = 'Membaca…';
   const reader = new FileReader();
-  reader.onload = () => {
+  reader.onload = async () => {
     try {
       if (kind === 'wilayah') {
         const r = sbAPI.importWilayahCSV(reader.result);
-        log.textContent = `OK wilayah: ${r.rowCount} baris, ${r.provCount} provinsi. Pakai Mode Real + scores utk Adopsi penuh.`;
+        log.textContent = `OK wilayah (local): ${r.rowCount} baris, ${r.provCount} provinsi.`;
       } else {
-        const r = sbAPI.importCSV(reader.result);
-        log.textContent = `OK scores: ${r.rowCount} baris, ${r.schoolCount} sekolah. Mode Real aktif.`;
+        log.textContent = 'Upload ke Supabase…';
+        const r = await sbAPI.importCSV(reader.result);
+        log.textContent = r.target === 'supabase'
+          ? `OK Supabase: ${r.rowCount} baris skor, ${r.schoolCount} sekolah → ${r.schoolsUpserted} schools + ${r.scoresUpserted} scores. Dashboard baca DB.`
+          : `OK local only (Supabase off): ${r.rowCount} baris, ${r.schoolCount} sekolah.`;
       }
       refreshStatus();
       if (sbAPI.applyModeUI) sbAPI.applyModeUI();
