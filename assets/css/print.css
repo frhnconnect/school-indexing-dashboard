@@ -1,73 +1,160 @@
-/* ============================================
-   Print Stylesheet — A4 Portrait (Light Theme)
-   ============================================ */
+/* Print — A4 portrait. Overview-aware. */
 
 @media print {
   @page {
     size: A4 portrait;
-    margin: 15mm 12mm;
+    margin: 12mm 10mm;
   }
 
-  .sidebar, .demo-banner, .page-header .controls, .btn,
-  .filter-bar, .tabs { display: none !important; }
+  /* chrome off */
+  .sidebar,
+  .demo-banner,
+  .demo-card,
+  .page-header .controls,
+  .controls,
+  .btn,
+  .btn-primary,
+  .btn-logout,
+  .filter-bar,
+  .tabs,
+  .jenjang-tabs,
+  .warn-banner,
+  .select-filter,
+  .select-month {
+    display: none !important;
+  }
+
+  html, body {
+    background: #fff !important;
+    color: #1F2937 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .app {
+    display: block !important;
+    background: #fff !important;
+  }
 
   .main {
     margin: 0 !important;
     padding: 0 !important;
     width: 100% !important;
     max-width: none !important;
+    overflow: visible !important;
   }
-
-  body, .app { background: #fff !important; color: #1F2937 !important; }
 
   .page-header {
     border-bottom: 2px solid #F97316;
     padding-bottom: 8px;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
+    display: block !important;
   }
-  .page-header h1 { color: #1F2937 !important; font-size: 20px; }
+  .page-header h1 {
+    color: #1F2937 !important;
+    font-size: 18px !important;
+  }
 
+  .ta-label {
+    margin-bottom: 10px !important;
+    font-size: 12px !important;
+    color: #6B7280 !important;
+  }
+
+  /* Overview jenjang blocks */
+  .jenjang-section {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    margin-bottom: 10px !important;
+    padding: 12px !important;
+    border: 1px solid #E5E7EB !important;
+    border-radius: 8px !important;
+    background: #fff !important;
+  }
+  .jenjang-section.sd { border-left: 4px solid #DC2626 !important; }
+  .jenjang-section.smp { border-left: 4px solid #2563EB !important; }
+  .jenjang-section.sma { border-left: 4px solid #6B7280 !important; }
+
+  .jenjang-section-header { margin-bottom: 8px !important; gap: 8px !important; }
+  .jenjang-icon { width: 28px !important; height: 28px !important; }
+  .jenjang-icon svg { width: 16px !important; height: 16px !important; }
+  .jenjang-section-title { font-size: 14px !important; }
+  .jenjang-section-count { font-size: 11px !important; }
+
+  .jenjang-kpi-row {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    margin-bottom: 8px !important;
+  }
+  .jenjang-kpi {
+    border: 1px solid #E5E7EB !important;
+    padding: 6px 8px !important;
+    background: #fff !important;
+    break-inside: avoid;
+  }
+  .jenjang-kpi-label { font-size: 9px !important; color: #6B7280 !important; }
+  .jenjang-kpi-value { font-size: 16px !important; color: #1F2937 !important; }
+  .jenjang-kpi-sub { font-size: 9px !important; color: #9CA3AF !important; }
+
+  /* index bars / cards */
   .card {
     box-shadow: none !important;
-    border: 1px solid #ECEC !important;
+    border: 1px solid #E5E7EB !important;
     break-inside: avoid;
-    margin-bottom: 12px !important;
+    page-break-inside: avoid;
+    margin-bottom: 8px !important;
+    background: #fff !important;
   }
+  .card-title { color: #1F2937 !important; font-size: 12px !important; }
 
-  .card-title { color: #1F2937 !important; font-size: 13px; }
-
-  .kpi-row { display: grid !important; gap: 6px !important; margin-bottom: 10px !important; }
+  .kpi-row {
+    display: grid !important;
+    gap: 6px !important;
+    margin-bottom: 8px !important;
+  }
   .kpi-row-5 { grid-template-columns: repeat(5, 1fr) !important; }
   .kpi-row-3 { grid-template-columns: repeat(3, 1fr) !important; }
-
   .kpi-card {
-    border: 1px solid #ECEC !important;
-    padding: 8px 6px !important;
+    border: 1px solid #E5E7EB !important;
+    padding: 6px !important;
+    background: #fff !important;
     break-inside: avoid;
   }
   .kpi-label { font-size: 8px !important; color: #9CA3AF !important; }
-  .kpi-value { font-size: 18px !important; }
+  .kpi-value { font-size: 16px !important; color: #1F2937 !important; }
   .kpi-sub { font-size: 9px !important; color: #9CA3AF !important; }
 
-  table { font-size: 10px !important; }
-  th { background: #F9FAFB !important; color: #6B7280 !important; border-bottom: 1px solid #ECEC !important; }
-  td { border-bottom: 1px solid #F0F0F0 !important; color: #1F2937 !important; }
+  .kriteria-card,
+  .kriteria-section {
+    break-inside: avoid;
+    font-size: 11px !important;
+  }
+
+  table { font-size: 10px !important; width: 100% !important; }
+  th {
+    background: #F9FAFB !important;
+    color: #6B7280 !important;
+    border-bottom: 1px solid #E5E7EB !important;
+  }
+  td {
+    border-bottom: 1px solid #F0F0F0 !important;
+    color: #1F2937 !important;
+  }
 
   .badge { border: 1px solid !important; font-size: 9px !important; }
   .badge-baik { background: #F0FDF4 !important; border-color: #22C55E !important; color: #22C55E !important; }
   .badge-sedang { background: #FFF7ED !important; border-color: #F97316 !important; color: #F97316 !important; }
-  .badge-kurang { background: #FEF2F2 !important; border-color: #EF444 !important; color: #EF444 !important; }
+  .badge-kurang { background: #FEF2F2 !important; border-color: #EF4444 !important; color: #EF4444 !important; }
 
-  .grid-2 { grid-template-columns: 1fr 1fr !important; gap: 10px !important; }
+  .grid-2 { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
+  canvas { max-width: 100% !important; max-height: 180px !important; }
 
-  .school-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 8px !important; }
-  .school-card { break-inside: avoid; border: 1px solid #ECEC !important; }
-
-  canvas { max-width: 100% !important; height: auto !important; }
-
-  .rank-num { color: #F97316 !important; }
-  .trend-up { color: #22C55E !important; }
-  .trend-down { color: #EF444 !important; }
-
-  .warn-banner { display: none !important; }
+  /* adopsi print bits */
+  .adopsi-kpi-row {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 6px !important;
+  }
+  .tabs, .adopsi-desc { display: none !important; }
 }
