@@ -97,7 +97,18 @@
   .jenjang-kpi-value { font-size: 14px !important; color: #1F2937 !important; }
   .jenjang-kpi-sub { font-size: 8px !important; color: #9CA3AF !important; }
 
-  /* cards + charts: stack for portrait */
+  /* Overview: keep Aktif | Tidak Aktif side-by-side even on print */
+  .jenjang-index-detail {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+  .jenjang-index-group {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  /* cards + charts: stack for portrait (except aktif/inaktif index groups above) */
   .grid-2,
   .grid-map-ranking {
     display: block !important;

@@ -103,12 +103,13 @@
 
 /* ─── Index Detail (within section) ─── */
 .jenjang-index-detail {
-  display: flex;
-  gap: 24px;
-  align-items: flex-start;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  align-items: stretch;
 }
 .jenjang-index-group {
-  flex: 1;
+  min-width: 0;
   background: var(--bg-card);
   border-radius: var(--radius-sm);
   padding: 14px;
