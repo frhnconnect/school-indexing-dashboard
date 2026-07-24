@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laporan Tahunan — Executive Dashboard</title>
+  <link rel="stylesheet" href="assets/css/style.css?v=13">
+  <link rel="stylesheet" href="assets/css/print.css?v=2">
+  <link rel="stylesheet" href="assets/css/annual-report.css?v=1">
+  <script src="lib/vendor/supabase.min.js"></script>
+  <script src="lib/vendor/chart.min.js"></script>
+</head>
+<body>
+  <div class="app">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo"><img src="assets/img/bali-seal.png" alt="Lambang Provinsi Bali"></div>
+        <div class="sidebar-title">Executive Dashboard<br><span class="sidebar-provinsi">Provinsi Bali</span></div>
+      </div>
+      <div class="nav-section">
+        <a href="index.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Overview
+        </a>
+        <a href="adopsi.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Adopsi Kelas Pintar
+        </a>
+        <a href="school-detail.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+          Detail Sekolah
+        </a>
+        <a href="index-breakdown.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Index Breakdown
+        </a>
+        <a href="national-dashboard.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Dashboard Nasional
+        </a>
+        <a href="school-list.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg>
+          Daftar Sekolah
+        </a>
+        <a href="annual-report.html" class="nav-item active">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          Laporan Tahunan
+        </a>
+        <a href="import-data.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Import Data
+        </a>
+      </div>
+      <div class="sidebar-footer">
+        <div class="sidebar-user" id="sidebar-user">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span id="user-name">—</span>
+          <button onclick="Auth.logout()" class="btn-logout" title="Keluar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </div>
+        <div class="demo-card" id="demo-card">
+          <svg class="demo-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div class="demo-card-title">Mode Demo</div>
+          <div class="demo-card-desc">Data sample ditampilkan. Hubungkan Supabase untuk data real.</div>
+          <a href="#" class="demo-card-link">Edit lib/supabase-client.js →</a>
+        </div>
+        <div class="sidebar-powered">
+          <img src="assets/img/logo-kp.svg" alt="Kelas Pintar">
+          <span>Powered by Kelas Pintar</span>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main content -->
+    <div class="main">
+      <!-- Report Header -->
+      <div class="report-header">
+        <div>
+          <h1>Laporan Tahunan — Tahun Ajaran</h1>
+          <div class="report-subtitle" id="report-subtitle">Aggregasi data tahun ajaran</div>
+        </div>
+        <div class="controls">
+          <select id="provinsi-select" class="select-filter"></select>
+          <select id="ta-select" class="select-filter"></select>
+          <button class="btn-primary" onclick="window.print()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download PDF
+          </button>
+        </div>
+      </div>
+
+      <div class="warn-banner" id="warn-banner" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="warn-banner-text">
+          Mode Demo — data yang ditampilkan adalah sample multi-provinsi. Edit <code>lib/supabase-client.js</code> untuk koneksi real.
+        </div>
+      </div>
+
+      <!-- Section 1: RINGKASAN EKSEKUTIF -->
+      <div class="report-section" id="section-1">
+        <h2 class="section-title"><span class="section-num">01</span> Ringkasan Eksekutif</h2>
+        <div class="kpi-row kpi-row-5" id="exec-kpi-row">
+          <div class="kpi-card">
+            <div class="kpi-label">Total Sekolah</div>
+            <div class="kpi-value" id="kpi-total">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Sekolah Aktif</div>
+            <div class="kpi-value green" id="kpi-aktif">—</div>
+            <div class="kpi-sub" id="kpi-aktif-pct">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Sekolah Inaktif</div>
+            <div class="kpi-value red" id="kpi-inaktif">—</div>
+            <div class="kpi-sub" id="kpi-inaktif-pct">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">% Aktif Nasional</div>
+            <div class="kpi-value" id="kpi-pct-aktif">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Avg Score Nasional</div>
+            <div class="kpi-value" id="kpi-avg">—</div>
+          </div>
+        </div>
+        <div class="kpi-row kpi-row-3">
+          <div class="kpi-card">
+            <div class="kpi-label">Kabupaten Terbaik</div>
+            <div class="kpi-value green" id="kpi-best-provinsi">—</div>
+            <div class="kpi-sub" id="kpi-best-score">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Total Kabupaten</div>
+            <div class="kpi-value" id="kpi-provinsi-count">—</div>
+          </div>
+          <div class="kpi-card">
+            <div class="kpi-label">Periode Data</div>
+            <div class="kpi-value" id="kpi-periode">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 2: ACTIVE vs INACTIVE -->
+      <div class="report-section" id="section-2">
+        <h2 class="section-title"><span class="section-num">02</span> Active vs Inactive</h2>
+        <div class="info-box" id="criteria-info-box">
+          <div class="info-box-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+          </div>
+          <div class="info-box-content">
+            <div class="info-box-title">Kriteria Sekolah Aktif</div>
+            <div class="info-box-text" id="criteria-text">—</div>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">Distribusi Aktif vs Inaktif (Nasional)</div>
+            <canvas id="chart-doughnut" height="200"></canvas>
+          </div>
+          <div class="card">
+            <div class="card-title">Aktif vs Inaktif per Kabupaten</div>
+            <canvas id="chart-active-bar" height="200"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 3: INSIGHT INDEX A-E -->
+      <div class="report-section" id="section-3">
+        <h2 class="section-title"><span class="section-num">03</span> Insight Index A–E</h2>
+        <div class="card">
+          <div class="card-title">Tren Index A–E (5 Bulan Terakhir)</div>
+          <canvas id="chart-index-trend" height="200"></canvas>
+        </div>
+        <div class="grid-2">
+          <div class="card">
+            <div class="card-title">Rata-rata Index A–E per Kabupaten</div>
+            <canvas id="chart-index-provinsi" height="220"></canvas>
+          </div>
+          <div class="insight-card" id="insight-index-card">
+            <div class="insight-card-title">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11H1v3h8v3l4-4.5L9 8v3z"/><path d="M21 12h-6"/></svg>
+              Insight Index A–E
+            </div>
+            <div class="insight-card-body" id="insight-index-body">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 4: RANKING KABUPATEN -->
+      <div class="report-section" id="section-4">
+        <h2 class="section-title"><span class="section-num">04</span> Ranking Kabupaten</h2>
+        <div class="card">
+          <div class="card-title">Tabel Lengkap Ranking Kabupaten</div>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th><th>Kabupaten</th><th>Sekolah</th>
+                  <th>Index A</th><th>Index B</th><th>Index C</th>
+                  <th>Index D</th><th>Index E</th>
+                  <th>Final Score</th><th>Aktif</th><th>Inaktif</th>
+                  <th>% Aktif</th><th>Trend</th>
+                </tr>
+              </thead>
+              <tbody id="ranking-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 5: REKOMENDASI -->
+      <div class="report-section" id="section-5">
+        <h2 class="section-title"><span class="section-num">05</span> Rekomendasi</h2>
+        <div class="insight-card">
+          <div class="insight-card-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+            Rekomendasi & Insight
+          </div>
+          <div class="insight-card-body" id="recommendations-body">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="lib/auth.js?v=11"></script>
+  <script src="lib/supabase-client.js?v=23"></script>
+  <script src="assets/js/annual-report.js?v=4"></script>
+</body>
+</html>

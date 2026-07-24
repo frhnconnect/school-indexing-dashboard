@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Dashboard — Indeks Nasional</title>
+  <link rel="stylesheet" href="assets/css/style.css?v=16">
+  <link rel="stylesheet" href="assets/css/national.css?v=3">
+  <link rel="stylesheet" href="assets/css/print.css" media="print">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <script src="lib/vendor/supabase.min.js"></script>
+  <script src="lib/vendor/chart.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+  <div class="app">
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo"><img src="assets/img/bali-seal.png" alt="Lambang Provinsi Bali"></div>
+        <div class="sidebar-title">Executive Dashboard<br><span class="sidebar-provinsi">Provinsi Bali</span></div>
+      </div>
+      <div class="nav-section">
+        <a href="index.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          Overview
+        </a>
+        <a href="adopsi.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          Adopsi Kelas Pintar
+        </a>
+        <a href="school-detail.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/></svg>
+          Tren & Index
+        </a>
+        <a href="index-breakdown.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          Indeks Breakdown
+        </a>
+        <a href="school-list.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg>
+          Daftar Sekolah
+        </a>
+        <a href="national-dashboard.html" class="nav-item active">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Indeks Nasional
+        </a>
+        <a href="import-data.html" class="nav-item">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Import Data
+        </a>
+      </div>
+      <div class="sidebar-footer">
+        <div class="sidebar-user" id="sidebar-user">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span id="user-name">—</span>
+          <button onclick="Auth.logout()" class="btn-logout" title="Keluar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </button>
+        </div>
+        <div class="demo-card" id="demo-card">
+          <svg class="demo-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div class="demo-card-title">Mode Demo</div>
+          <div class="demo-card-desc">Data sample ditampilkan. Hubungkan Supabase untuk data real.</div>
+          <a href="#" class="demo-card-link">Edit lib/supabase-client.js →</a>
+        </div>
+        <div class="sidebar-powered">
+          <img src="assets/img/logo-kp.svg" alt="Kelas Pintar">
+          <span>Powered by Kelas Pintar</span>
+        </div>
+      </div>
+    </nav>
+
+    <div class="main">
+      <div class="page-header">
+        <h1>Indeks Nasional — Indonesia</h1>
+        <div class="controls">
+          <select id="provinsi-select" class="select-filter" onchange="loadData()"></select>
+          <select id="ta-select" class="select-filter"></select>
+          <select id="month-select" class="select-month" onchange="loadData()"></select>
+          <button class="btn-primary" onclick="window.print()">Download PDF</button>
+        </div>
+      </div>
+      <div class="warn-banner" id="warn-banner" style="display:none;">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        <div class="warn-banner-text">Mode Demo — data sample. Upload CSV di Import Data untuk Mode Real.</div>
+      </div>
+      <div id="map-container" style="height:280px;margin-bottom:16px;border-radius:8px;overflow:hidden"></div>
+      <div class="kpi-row">
+        <div class="kpi-card"><div class="kpi-label">Total Provinsi</div><div class="kpi-value" id="kpi-provinsi">—</div></div>
+        <div class="kpi-card"><div class="kpi-label">Total Sekolah</div><div class="kpi-value" id="kpi-sekolah">—</div></div>
+        <div class="kpi-card"><div class="kpi-label">Rata-rata</div><div class="kpi-value" id="kpi-avg">—</div></div>
+        <div class="kpi-card"><div class="kpi-label">Aktif</div><div class="kpi-value" id="kpi-aktif">—</div><div class="kpi-sub" id="kpi-aktif-pct">—</div></div>
+        <div class="kpi-card"><div class="kpi-label">Inaktif</div><div class="kpi-value" id="kpi-inaktif">—</div><div class="kpi-sub" id="kpi-inaktif-pct">—</div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">Ranking</div>
+          <table class="ranking-table"><thead><tr><th>#</th><th>Wilayah</th><th>Sekolah</th><th>Avg</th><th>Aktif</th><th>Level</th></tr></thead><tbody id="ranking-body"></tbody></table>
+        </div>
+        <div class="card"><div class="card-title">Index A-E (Top 10)</div><div style="height:240px;position:relative"><canvas id="chart-index-provinsi"></canvas></div></div>
+      </div>
+      <div class="grid-2">
+        <div class="card"><div class="card-title">Aktif vs Inaktif</div><div style="height:240px;position:relative"><canvas id="chart-active-provinsi"></canvas></div></div>
+        <div class="card"><div class="card-title">Distribusi Level</div><div style="height:240px;position:relative"><canvas id="chart-level-dist"></canvas></div></div>
+      </div>
+      <div class="card"><div class="card-title">Tren</div><div style="height:240px;position:relative"><canvas id="chart-trend-nasional"></canvas></div></div>
+      <div class="card"><div class="card-title">Detail</div>
+        <div class="table-wrap"><table><thead><tr>
+          <th>RANK</th><th>WILAYAH</th><th>SEKOLAH</th><th>FINAL</th><th>A</th><th>B</th><th>C</th><th>D</th><th>E</th><th>AKTIF</th><th>INAKTIF</th><th>% AKTIF</th><th>LEVEL</th>
+        </tr></thead><tbody id="detail-body"></tbody></table></div>
+      </div>
+    </div>
+  </div>
+
+<script src="lib/auth.js?v=11"></script>
+<script src="lib/supabase-client.js?v=23"></script>
+<script src="assets/js/national-dashboard.js?v=12"></script>
+</body>
+</html>

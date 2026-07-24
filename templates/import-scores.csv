@@ -1,0 +1,5 @@
+month,school_code,school_name,jenjang,kabupaten_kota,kecamatan,provinsi,provinsi_code,a1_literasi,a2_numerasi,a3_sains,a4_sosial,a5_karakter,b_avg_max,b_avg_min,b_avg_gap,c1_login,c2_assign,c3_content,c4_ai,d1_login,d2_attempt,d3_content,d4_ai,e_student_reg,e_student_real,e_teacher_reg,e_teacher_needed
+2025-07,BALI-0001,SDN Denpasar 1,SD,Denpasar,Denpasar Selatan,Bali,bali,70,75,68,72,65,90,50,25,55,48,60,40,60,52,58,35,200,250,15,18
+2025-07,BALI-0002,SMPN 1 Denpasar,SMP,Denpasar,Denpasar Barat,Bali,bali,62,70,65,68,60,88,45,28,48,40,55,30,52,45,50,28,320,400,24,30
+2025-07,BALI-0003,SMAN 1 Denpasar,SMA,Denpasar,Denpasar Utara,Bali,bali,80,78,82,75,70,95,55,22,65,58,70,50,58,55,62,40,450,500,35,40
+2025-08,BALI-0001,SDN Denpasar 1,SD,Denpasar,Denpasar Selatan,Bali,bali,72,76,70,73,66,91,52,24,56,50,61,42,61,54,59,36,210,250,16,18

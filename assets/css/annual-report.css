@@ -1,0 +1,243 @@
+/* ============================================
+   Annual Report — Custom Styling
+   ============================================ */
+
+/* ─── Report Header ─── */
+.report-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--border);
+}
+
+.report-header h1 {
+  font-size: 23px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.report-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ─── Section Title (numbered) ─── */
+.report-section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.section-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--primary-light);
+  color: var(--primary-dark);
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ─── Info Box (Active/Inactive criteria) ─── */
+.info-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: #EFF6FF;
+  border: 1px solid #DBEAFE;
+  border-left: 4px solid #3B82F6;
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+
+.info-box-icon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: #3B82F6;
+  margin-top: 2px;
+}
+
+.info-box-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.info-box-content {
+  flex: 1;
+}
+
+.info-box-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1E40AF;
+  margin-bottom: 6px;
+}
+
+.info-box-text {
+  font-size: 13px;
+  color: #1F2937;
+  line-height: 1.6;
+}
+
+.info-box-text ul {
+  margin-top: 6px;
+  padding-left: 20px;
+}
+
+.info-box-text li {
+  margin-bottom: 4px;
+}
+
+/* ─── Insight Card (auto-generated insights) ─── */
+.insight-card {
+  background: linear-gradient(135deg, #F0F9FF 0%, #EFF6FF 50%, #F5F3FF 100%);
+  border: 1px solid #DBEAFE;
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: var(--shadow);
+}
+
+.insight-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.insight-card-title svg {
+  width: 18px;
+  height: 18px;
+  color: #3B82F6;
+  flex-shrink: 0;
+}
+
+.insight-card-body {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.insight-card-body p {
+  margin-bottom: 10px;
+}
+
+.insight-card-body p:last-child {
+  margin-bottom: 0;
+}
+
+.insight-card-body strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.insight-card-body .rec-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(219, 234, 254, 0.5);
+}
+
+.insight-card-body .rec-item:last-child {
+  border-bottom: none;
+}
+
+.insight-card-body .rec-marker {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3B82F6;
+  margin-top: 7px;
+}
+
+/* ─── Table wrapper for horizontal scroll ─── */
+.table-wrap {
+  overflow-x: auto;
+}
+
+.table-wrap table {
+  min-width: 900px;
+}
+
+/* ─── Print-Friendly Styles ─── */
+@media print {
+  .sidebar,
+  .controls,
+  .btn-primary,
+  #year-select,
+  .warn-banner {
+    display: none !important;
+  }
+
+  .main {
+    margin-left: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+  }
+
+  .report-section {
+    page-break-after: always;
+    margin-bottom: 0;
+  }
+
+  .report-section:last-child {
+    page-break-after: auto;
+  }
+
+  .report-header {
+    border-bottom: 2px solid #999;
+    margin-bottom: 16px;
+  }
+
+  .section-title {
+    page-break-after: avoid;
+  }
+
+  .card,
+  .kpi-card,
+  .info-box,
+  .insight-card {
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    break-inside: avoid;
+  }
+
+  .grid-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .report-section .card-title {
+    page-break-after: avoid;
+  }
+
+  table {
+    font-size: 11px;
+  }
+
+  .table-wrap {
+    overflow: visible;
+  }
+}

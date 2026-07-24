@@ -1,0 +1,139 @@
+/* breakdown.css — Page 3: Index Breakdown */
+
+.breakdown-section { margin-bottom: 16px; }
+.breakdown-section canvas { max-height: 220px; }
+.breakdown-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.breakdown-score {
+  font-size: 28px;
+  font-weight: 700;
+  margin-left: auto;
+}
+.breakdown-subs {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.breakdown-sub {
+  flex: 1;
+  min-width: 100px;
+  text-align: center;
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  padding: 10px;
+  border: 1px solid var(--border-light);
+}
+.breakdown-sub-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+.breakdown-sub-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+/* CSS bubble tip — native title too weak / delay-only */
+.has-tip { position: relative; cursor: help; }
+.tip-i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  margin-left: 5px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  font-size: 10px;
+  font-weight: 700;
+  font-style: normal;
+  color: var(--text-muted);
+  vertical-align: middle;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.tip-bubble {
+  display: none;
+  position: absolute;
+  z-index: 40;
+  left: 50%;
+  top: calc(100% + 8px);
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: 280px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #111827;
+  color: #F9FAFB;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.45;
+  text-align: left;
+  text-transform: none;
+  letter-spacing: normal;
+  box-shadow: 0 8px 24px rgba(0,0,0,.18);
+  pointer-events: none;
+  white-space: normal;
+}
+.tip-bubble-wide {
+  left: 0;
+  transform: none;
+  max-width: min(420px, 70vw);
+}
+.tip-bubble::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: -5px;
+  transform: translateX(-50%) rotate(45deg);
+  width: 10px;
+  height: 10px;
+  background: #111827;
+}
+.tip-bubble-wide::before { left: 24px; }
+.has-tip:hover > .tip-bubble,
+.has-tip:focus-within > .tip-bubble { display: block; }
+
+/* Kab table */
+.kab-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.kab-table th {
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  padding: 8px 10px;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+.kab-table th:not(:first-child) { text-align: center; }
+.kab-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--border-light);
+}
+.kab-table td:not(:first-child) { text-align: center; }
+.kab-table td strong { font-size: 14px; }
+.table-wrap { overflow-x: auto; }
+
+/* ─── School List Summary ─── */
+.school-list-summary {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+.sl-summary-left { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+.sl-filter-row { display: flex; align-items: center; gap: 12px; }
+.sl-filter-row label { font-size: 13px; font-weight: 600; color: var(--text-secondary); width: 80px; flex-shrink: 0; }
+.sl-filter-row .select-filter { flex: 1; }
+.sl-summary-right { text-align: right; flex-shrink: 0; }
+.sl-score-label { font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--text-muted); }
+.sl-score-value { font-size: 36px; font-weight: 700; color: var(--primary); line-height: 1.2; }
+.sl-score-subs { display: flex; gap: 10px; justify-content: flex-end; font-size: 12px; font-weight: 600; margin-top: 4px; }

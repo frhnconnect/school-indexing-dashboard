@@ -1,0 +1,66 @@
+/* detail.css — Page 2: Detail Sekolah */
+
+.index-chart-card { margin-bottom: 16px; }
+.index-chart-card .card-title { display: flex; align-items: center; gap: 8px; }
+.index-color-dot {
+  width: 12px; height: 12px; border-radius: 50%; display: inline-block; flex-shrink: 0;
+}
+
+/* ─── Jenjang Tabs (pagination style) ─── */
+.jenjang-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--border);
+}
+.jenjang-tab {
+  padding: 10px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: color 0.15s, border-color 0.15s;
+}
+.jenjang-tab:hover { color: var(--text-secondary); }
+.jenjang-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+
+/* ─── Chart Pair (bar + line side by side) ─── */
+.chart-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.chart-pair .card { min-height: 300px; }
+.chart-pair canvas { max-height: 280px; }
+
+/* ─── Kab Detail Chart Cards ─── */
+.kab-detail-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.kab-detail-pair .card { min-height: 300px; }
+.kab-detail-pair canvas { max-height: 280px; }
+
+/* ─── Kab Detail Full-Width Sections ─── */
+.kab-detail-section { margin-bottom: 16px; }
+.kab-detail-section canvas { max-height: 320px; }
+.kab-detail-trend-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.kab-detail-trend-header span { flex: 1; }
+.kab-detail-trend-header .select-filter { width: auto; min-width: 140px; }
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .chart-pair { grid-template-columns: 1fr; }
+  .kab-detail-pair { grid-template-columns: 1fr; }
+}
