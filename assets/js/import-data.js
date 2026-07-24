@@ -1,4 +1,4 @@
-/* import-data.js — scores + wilayah CSV, Demo/Real switch */
+/* import-data.js — scores → Supabase (preferred) / local fallback */
 
 document.addEventListener('DOMContentLoaded', () => {
   if (!Auth.requireAdmin()) return;
@@ -16,16 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = 'templates/import-wilayah.csv';
   });
   document.getElementById('btn-source-demo').addEventListener('click', () => switchSource('demo'));
-  document.getElementById('btn-source-import').addEventListener('click', () => switchSource('import'));
+  document.getElementById('btn-source-import').addEventListener('click', () => switchSource('real'));
 });
 
 function switchSource(src) {
   const log = document.getElementById('import-log');
   try {
-    sbAPI.setDataSource(src);
-    log.textContent = src === 'demo'
-      ? 'Mode Demo. Sample aktif; file import tetap tersimpan.'
-      : 'Mode Real. Scores (+ wilayah jika ada) dipakai dashboard.';
+    if (src === 'real') {
+      // prefer supabase when wired
+      try { sbAPI.setDataSource('supabase'); }
+      catch (e) { sbAPI.setDataSource('import'); }
+      log.textContent = 'Mode Real aktif (Supabase/DB atau CSV lokal).';
+    } else {
+      sbAPI.setDataSource('demo');
+      log.textContent = 'Mode Demo. Sample seed (hanya jika Supabase off).';
+    }
     refreshStatus();
     if (sbAPI.applyModeUI) sbAPI.applyModeUI();
   } catch (err) {
@@ -39,28 +44,31 @@ function refreshStatus() {
   const meta = sbAPI.getImportMeta ? sbAPI.getImportMeta() : null;
   const btnDemo = document.getElementById('btn-source-demo');
   const btnImp = document.getElementById('btn-source-import');
-  btnDemo.classList.toggle('active-source', src === 'demo');
-  btnImp.classList.toggle('active-source', src === 'import');
-  btnImp.disabled = !(meta && meta.hasScores);
-  document.getElementById('btn-clear').disabled = !meta;
+  const isReal = src === 'import' || src === 'supabase';
+  btnDemo.classList.toggle('active-source', !isReal);
+  btnImp.classList.toggle('active-source', isReal);
+  btnImp.disabled = false;
+  document.getElementById('btn-clear').disabled = !(meta && (meta.target === 'local' || meta.hasWilayah));
 
-  if (!meta) {
-    st.innerHTML = '<span class="status-dot red"></span> <strong>Mode Demo</strong> — belum ada import.';
+  if (src === 'supabase') {
+    const bits = [];
+    if (meta && meta.rowCount) bits.push(`upload terakhir: ${meta.rowCount} baris / ${meta.schoolCount} sekolah`);
+    if (meta && meta.months && meta.months.length) bits.push(`bulan ${meta.months.join(', ')}`);
+    bits.push('sumber: Supabase');
+    st.innerHTML = `<span class="status-dot green"></span> <strong>Mode Real (Supabase)</strong> — ${bits.join(' · ')}`;
     return;
   }
-  const bits = [];
-  if (meta.hasScores) bits.push(`${meta.rowCount} baris skor / ${meta.schoolCount} sekolah / bulan ${meta.months.join(', ') || '—'}`);
-  if (meta.hasWilayah) bits.push(`wilayah ${meta.wilayahRows} baris`);
-  else bits.push('wilayah: demo defaults (upload CSV wilayah utk Dapodik real)');
-  const mode = src === 'import' ? 'Mode Real' : 'Mode Demo';
-  const dot = src === 'import' ? 'green' : 'orange';
-  st.innerHTML = `<span class="status-dot ${dot}"></span> <strong>${mode}</strong> — ${bits.join(' · ')}`;
+  if (src === 'import' && meta) {
+    st.innerHTML = `<span class="status-dot green"></span> <strong>Mode Real (CSV lokal)</strong> — ${meta.rowCount} baris / ${meta.schoolCount} sekolah`;
+    return;
+  }
+  st.innerHTML = `<span class="status-dot orange"></span> <strong>Mode Demo</strong> — sample. Upload CSV untuk tulis ke Supabase.`;
 }
 
 function onClear() {
-  if (!confirm('Hapus import skor + wilayah? Demo tetap ada.')) return;
+  if (!confirm('Hapus import lokal di browser? Data Supabase tidak dihapus.')) return;
   sbAPI.clearImport();
-  document.getElementById('import-log').textContent = 'Import dihapus. Mode Demo.';
+  document.getElementById('import-log').textContent = 'Import lokal dihapus. Mode Real Supabase tetap jika DB connected.';
   refreshStatus();
   if (sbAPI.applyModeUI) sbAPI.applyModeUI();
 }
@@ -81,8 +89,8 @@ function onFile(e, kind) {
         log.textContent = 'Upload ke Supabase…';
         const r = await sbAPI.importCSV(reader.result);
         log.textContent = r.target === 'supabase'
-          ? `OK Supabase: ${r.rowCount} baris skor, ${r.schoolCount} sekolah → ${r.schoolsUpserted} schools + ${r.scoresUpserted} scores. Dashboard baca DB.`
-          : `OK local only (Supabase off): ${r.rowCount} baris, ${r.schoolCount} sekolah.`;
+          ? `OK Supabase: ${r.rowCount} baris, ${r.schoolCount} sekolah → DB. Mode Real (Supabase).`
+          : `OK local: ${r.rowCount} baris, ${r.schoolCount} sekolah. Mode Real (CSV lokal).`;
       }
       refreshStatus();
       if (sbAPI.applyModeUI) sbAPI.applyModeUI();
