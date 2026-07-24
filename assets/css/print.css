@@ -1,12 +1,11 @@
-/* Print — A4 portrait. Overview-aware. */
+/* Print — A4 portrait. Charts stack full-width + resize. */
 
 @media print {
   @page {
     size: A4 portrait;
-    margin: 12mm 10mm;
+    margin: 10mm 8mm;
   }
 
-  /* chrome off */
   .sidebar,
   .demo-banner,
   .demo-card,
@@ -20,7 +19,8 @@
   .jenjang-tabs,
   .warn-banner,
   .select-filter,
-  .select-month {
+  .select-month,
+  #kab-trend-index-select {
     display: none !important;
   }
 
@@ -46,92 +46,118 @@
 
   .page-header {
     border-bottom: 2px solid #F97316;
-    padding-bottom: 8px;
-    margin-bottom: 12px;
+    padding-bottom: 6px;
+    margin-bottom: 10px;
     display: block !important;
   }
   .page-header h1 {
     color: #1F2937 !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
   }
 
   .ta-label {
-    margin-bottom: 10px !important;
-    font-size: 12px !important;
+    margin-bottom: 8px !important;
+    font-size: 11px !important;
     color: #6B7280 !important;
   }
 
-  /* Overview jenjang blocks */
+  /* Overview jenjang */
   .jenjang-section {
     break-inside: avoid;
     page-break-inside: avoid;
-    margin-bottom: 10px !important;
-    padding: 12px !important;
+    margin-bottom: 8px !important;
+    padding: 10px !important;
     border: 1px solid #E5E7EB !important;
-    border-radius: 8px !important;
+    border-radius: 6px !important;
     background: #fff !important;
   }
   .jenjang-section.sd { border-left: 4px solid #DC2626 !important; }
   .jenjang-section.smp { border-left: 4px solid #2563EB !important; }
   .jenjang-section.sma { border-left: 4px solid #6B7280 !important; }
 
-  .jenjang-section-header { margin-bottom: 8px !important; gap: 8px !important; }
-  .jenjang-icon { width: 28px !important; height: 28px !important; }
-  .jenjang-icon svg { width: 16px !important; height: 16px !important; }
-  .jenjang-section-title { font-size: 14px !important; }
-  .jenjang-section-count { font-size: 11px !important; }
+  .jenjang-section-header { margin-bottom: 6px !important; gap: 6px !important; }
+  .jenjang-icon { width: 24px !important; height: 24px !important; }
+  .jenjang-icon svg { width: 14px !important; height: 14px !important; }
+  .jenjang-section-title { font-size: 13px !important; }
+  .jenjang-section-count { font-size: 10px !important; }
 
   .jenjang-kpi-row {
     display: grid !important;
     grid-template-columns: repeat(3, 1fr) !important;
-    gap: 6px !important;
-    margin-bottom: 8px !important;
+    gap: 5px !important;
+    margin-bottom: 6px !important;
   }
   .jenjang-kpi {
     border: 1px solid #E5E7EB !important;
-    padding: 6px 8px !important;
+    padding: 5px 6px !important;
     background: #fff !important;
     break-inside: avoid;
   }
-  .jenjang-kpi-label { font-size: 9px !important; color: #6B7280 !important; }
-  .jenjang-kpi-value { font-size: 16px !important; color: #1F2937 !important; }
-  .jenjang-kpi-sub { font-size: 9px !important; color: #9CA3AF !important; }
+  .jenjang-kpi-label { font-size: 8px !important; color: #6B7280 !important; }
+  .jenjang-kpi-value { font-size: 14px !important; color: #1F2937 !important; }
+  .jenjang-kpi-sub { font-size: 8px !important; color: #9CA3AF !important; }
 
-  /* index bars / cards */
+  /* cards + charts: stack for portrait */
+  .grid-2,
+  .grid-map-ranking {
+    display: block !important;
+    grid-template-columns: none !important;
+  }
+
   .card {
     box-shadow: none !important;
     border: 1px solid #E5E7EB !important;
     break-inside: avoid;
     page-break-inside: avoid;
     margin-bottom: 8px !important;
+    padding: 8px !important;
     background: #fff !important;
+    width: 100% !important;
   }
-  .card-title { color: #1F2937 !important; font-size: 12px !important; }
+  .card-title {
+    color: #1F2937 !important;
+    font-size: 11px !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* chart hosts: fixed print height so Chart.js can fill */
+  .card > div[style*="height"],
+  .card div[style*="position:relative"] {
+    height: 160px !important;
+    max-height: 160px !important;
+    position: relative !important;
+  }
+
+  canvas {
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: 150px !important;
+  }
 
   .kpi-row {
     display: grid !important;
-    gap: 6px !important;
+    gap: 5px !important;
     margin-bottom: 8px !important;
   }
   .kpi-row-5 { grid-template-columns: repeat(5, 1fr) !important; }
   .kpi-row-3 { grid-template-columns: repeat(3, 1fr) !important; }
   .kpi-card {
     border: 1px solid #E5E7EB !important;
-    padding: 6px !important;
+    padding: 5px !important;
     background: #fff !important;
     break-inside: avoid;
   }
   .kpi-label { font-size: 8px !important; color: #9CA3AF !important; }
-  .kpi-value { font-size: 16px !important; color: #1F2937 !important; }
-  .kpi-sub { font-size: 9px !important; color: #9CA3AF !important; }
+  .kpi-value { font-size: 14px !important; color: #1F2937 !important; }
+  .kpi-sub { font-size: 8px !important; color: #9CA3AF !important; }
 
   .kriteria-card,
   .kriteria-section {
     break-inside: avoid;
-    font-size: 11px !important;
+    font-size: 10px !important;
   }
 
-  table { font-size: 10px !important; width: 100% !important; }
+  table { font-size: 9px !important; width: 100% !important; }
   th {
     background: #F9FAFB !important;
     color: #6B7280 !important;
@@ -142,19 +168,18 @@
     color: #1F2937 !important;
   }
 
-  .badge { border: 1px solid !important; font-size: 9px !important; }
+  .badge { border: 1px solid !important; font-size: 8px !important; }
   .badge-baik { background: #F0FDF4 !important; border-color: #22C55E !important; color: #22C55E !important; }
   .badge-sedang { background: #FFF7ED !important; border-color: #F97316 !important; color: #F97316 !important; }
   .badge-kurang { background: #FEF2F2 !important; border-color: #EF4444 !important; color: #EF4444 !important; }
 
-  .grid-2 { grid-template-columns: 1fr 1fr !important; gap: 8px !important; }
-  canvas { max-width: 100% !important; max-height: 180px !important; }
-
-  /* adopsi print bits */
   .adopsi-kpi-row {
     display: grid !important;
     grid-template-columns: repeat(4, 1fr) !important;
-    gap: 6px !important;
+    gap: 5px !important;
   }
   .tabs, .adopsi-desc { display: none !important; }
+
+  /* map often empty/useless in print */
+  #map-container { display: none !important; }
 }
