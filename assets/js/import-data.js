@@ -89,8 +89,8 @@ function onFile(e, kind) {
         log.textContent = 'Upload ke Supabase…';
         const r = await sbAPI.importCSV(reader.result);
         log.textContent = r.target === 'supabase'
-          ? `OK Supabase: ${r.rowCount} baris, ${r.schoolCount} sekolah → DB. Mode Real (Supabase).`
-          : `OK local: ${r.rowCount} baris, ${r.schoolCount} sekolah. Mode Real (CSV lokal).`;
+          ? `OK: DB diganti isi CSV ini saja — ${r.schoolCount} sekolah / ${r.rowCount} baris. Refresh halaman lain.`
+          : `OK local: ${r.rowCount} baris, ${r.schoolCount} sekolah.`;
       }
       refreshStatus();
       if (sbAPI.applyModeUI) sbAPI.applyModeUI();
